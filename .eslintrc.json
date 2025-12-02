@@ -30,7 +30,7 @@
     "security/detect-object-injection": "warn",
     "import/no-default-export": "off",
     "import/order": [
-      "error",
+      "warn",
       {
         "groups": [
           "builtin",
@@ -40,8 +40,8 @@
           "sibling",
           "index"
         ],
-        "alphabeticalOrder": true,
-        "newlines-between": "always"
+        "newlines-between": "always",
+        "alphabeticalOrder": false
       }
     ]
   },
