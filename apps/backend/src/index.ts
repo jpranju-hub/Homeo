@@ -8,7 +8,7 @@ import { logger } from './utils/logger.js';
 import authRoutes from './routes/auth.js';
 import patientRoutes from './routes/patients.js';
 import appointmentRoutes from './routes/appointments.js';
-import consultationRoutes from './routes/consultations';
+import consultationRoutes from './routes/consultations.js';
 
 const app: Express = express();
 const prisma = new PrismaClient();

@@ -15,7 +15,7 @@ router.get('/', async (req: Request, res: Response) => {
     const { page = 1, limit = 10, status } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
 
-    const where = status ? { status } : {};
+    const where: any = status ? { status: String(status).toUpperCase() } : {};
 
     const [appointments, total] = await Promise.all([
       prisma.appointment.findMany({
@@ -24,7 +24,7 @@ router.get('/', async (req: Request, res: Response) => {
         take: Number(limit),
         include: {
           patient: { select: { id: true, user: { select: { firstName: true, lastName: true } } } },
-          doctor: { select: { id: true, firstName: true, lastName: true } },
+          doctor: { select: { id: true, user: { select: { firstName: true, lastName: true } } } },
         },
         orderBy: { appointmentDate: 'asc' },
       }),
@@ -120,7 +120,7 @@ router.put('/:id', async (req: Request, res: Response) => {
     const appointment = await prisma.appointment.update({
       where: { id },
       data: {
-        ...(status && { status }),
+        ...(status && { status: String(status).toUpperCase() }),
         ...(notes && { notes }),
       },
       include: {

@@ -121,14 +121,17 @@ router.put('/:id', async (req: Request, res: Response) => {
     const { id } = req.params;
     const validatedData = UpdatePatientSchema.parse(req.body);
 
+    const updateData: any = { ...validatedData };
+    if (validatedData.dateOfBirth) {
+      updateData.dateOfBirth = new Date(validatedData.dateOfBirth);
+    }
+    if (validatedData.bloodGroup) {
+      updateData.bloodGroup = String(validatedData.bloodGroup).toUpperCase().replace(/-/g, '_');
+    }
+    
     const patient = await prisma.patient.update({
       where: { id },
-      data: {
-        ...validatedData,
-        dateOfBirth: validatedData.dateOfBirth
-          ? new Date(validatedData.dateOfBirth)
-          : undefined,
-      },
+      data: updateData,
       include: { user: { select: { email: true, firstName: true, lastName: true } } },
     });
 

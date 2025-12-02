@@ -27,7 +27,7 @@ router.get('/', async (req: Request, res: Response) => {
         take: Number(limit),
         include: {
           patient: { select: { id: true, user: { select: { firstName: true, lastName: true } } } },
-          doctor: { select: { id: true, firstName: true, lastName: true } },
+          doctor: { select: { id: true, user: { select: { firstName: true, lastName: true } } } },
           prescriptions: true,
         },
         orderBy: { scheduledAt: 'desc' },
